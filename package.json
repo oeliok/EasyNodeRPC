@@ -1,0 +1,18 @@
+{
+  "name": "dsf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "s": "node dsf-server/index.js",
+    "c": "node dsf-client/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "log4js": "^6.3.0",
+    "node-schedule": "^2.0.0"
+  }
+}
