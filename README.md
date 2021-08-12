@@ -12,7 +12,7 @@ dsf-server实现了一个简单的注册中心：
 * Y 提供客户端程序心跳检查。
 * Y 提供检测服务提供者是否存活。
 * N 提供服务不可用的时候，备份注册中心通知客户端注册到备份的服务上面。
-* N 可配置的文件。
+* Y 可配置的文件。
 
 dsf-client实现了客户端程序：  
 * Y 启动初始化本地服务和远程服务。
@@ -22,7 +22,7 @@ dsf-client实现了客户端程序：
 * Y 服务提供者的本地调用接口。
 * Y 定时检测服务中心是否存在。
 * Y 服务消费者的远程调用封装。
-* N 可配置的文件。
+* Y 可配置的文件。
 
 ## 快速上手
 
@@ -35,13 +35,13 @@ npm run s
 ### 第二步
 启动客户端程序，可以多启动几个客户端，默认调度算法使用了轮询，可以自行扩展实现其他算法。
 ```shell
-npm run c
+npm run t
 ```
 
 ### 第三步
 启动调用程序
 ```shell
-node dsf-client2/index.js
+npm run o
 ```
 
 ### 验证服务调用
@@ -49,25 +49,39 @@ node dsf-client2/index.js
 在本地启动postman工具，使用post方法
 调用下面的接口，端口根据你的客户端而定。
 ```txt
-http://127.0.0.1:3001/dsf/service/com.oeli.login/1.0/test
+http://127.0.0.1:6178/dsf/service/com.oeli.hello/1.0/say
 ```
 或者控制台
 ```shell
-curl --location --request POST '127.0.0.1:6178/dsf/service/com.oeli.login/1.0/test' \
+curl --location --request POST '127.0.0.1:6178/dsf/service/com.oeli.hello/1.0/say' \
 --header 'Content-Type: application/json' \
 --data-raw '[
-    "You don't have any collections"
+    "you don't have any collections"
 ]'
 ```
 观察控制台的输出
 
+也可访问http接口，使用get方法
+```txt
+http://127.0.0.1:6178/test/hello?word=EasyNodeRPC
+```
+
 
 ## 基础介绍
-我们如何编写自己的业务逻辑呢？  
-1、可以参考dsf-client\rpc路径下面的代码，其中interface是需要用到的接口，service是提供的服务接口。
-在其他的地方是可以直接引用这两个地方的代码。
+我们如何编写自己的业务逻辑呢？
 
-2、通过可以在dsf-client\modules下写本地客户端的http服务。
+1、可以参考example\appone路径下面的代码，其中interface是需要用到的接口，service是提供的服务接口，http是提供个人的http服务。
+在其他的地方是可以直接引用interface和service的代码。
+
+2.配置文件可以参考dsf-client\config\application.js，复制这个配置文件指定个人的目录，并且可以参考example\appone\start.sh
+进行启动项目。
+
+3.目前框架的远程只支持HTTP+JSON的方式进行交互，同时服务可选择的配置也很简单，后续有需要可以扩展。
+
+
+
+希望你会喜欢这种开发模式！！！！！
+
 
 ## 有趣的话题
 

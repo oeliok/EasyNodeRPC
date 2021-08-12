@@ -2,7 +2,7 @@ const fs = require("fs");
 const express = require('express');
 const logger = require("../lib/log");
 const app = express();
-const { port } = require("./config/application.json");
+const { port, cheartbeat, ctimeout } = require("./config/application.json");
 const { startDetack } = require("./service/nmService");
 
 app.use((req, res, next) => {
@@ -40,5 +40,5 @@ app.listen(port, "0.0.0.0", () => {
     logger.info(`DSF-SERVER listening at http://localhost:${port}`);
 
     // 启动扫描任务
-    startDetack(8000, 10000);
+    startDetack(cheartbeat, ctimeout);
 });

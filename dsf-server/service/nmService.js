@@ -77,7 +77,10 @@ exports.addService = function (server = "", provider = []) {
                 customer: []
             }
         } else {
-            SERVICES[key].provider.push(server);
+            // 如果当前服务已经注册了就不要重复注册了
+            if (SERVICES[key].provider.includes(server) == false) {
+                SERVICES[key].provider.push(server);
+            }
             // 需要通知订阅服务的节点有新的服务上线了
             pubrvice[key] = SERVICES[key].customer;
         }
@@ -98,7 +101,9 @@ exports.addSubService = function (server = "", customer = []) {
                 customer: [server]
             }
         } else {
-            SERVICES[key].customer.push(server);
+            if (SERVICES[key].customer.includes(server) == false) {
+                SERVICES[key].customer.push(server);
+            }
             subservice[key] = SERVICES[key].provider;
         }
     }
